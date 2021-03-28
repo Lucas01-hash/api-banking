@@ -17,10 +17,13 @@ module.exports = {
       },
       description: {
         type: Sequelize.STRING,
-        allowNull: false,
       },
       amount: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      type: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
       created_at: {

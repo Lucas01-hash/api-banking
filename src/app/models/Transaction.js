@@ -6,6 +6,7 @@ class Transaction extends Sequelize.Model {
       {
         description: Sequelize.STRING,
         amount: Sequelize.INTEGER,
+        type: Sequelize.STRING,
         user_id: Sequelize.INTEGER,
       },
       {

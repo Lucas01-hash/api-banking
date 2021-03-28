@@ -17,7 +17,7 @@ class AccountController {
     return res.status(201).json(accountUser);
   }
 
-  async index(req, res) {
+  async show(req, res) {
     const { accountUser } = req;
     const user_id = accountUser.id;
 
@@ -28,22 +28,26 @@ class AccountController {
     return res.json(user);
   }
 
-  async deposit(req, res) {
-    const { description, amount } = req.body;
+  async index(req, res) {
     const { accountUser } = req;
 
-    if (accountUser) {
-      const deposito = await Transaction.create({
-        description,
-        amount,
-        user_id: accountUser.id,
-      });
-      return res.status(201).json(deposito);
-    }
+    const { date } = req.query;
 
-    return res
-      .status(400)
-      .json({ error: "it was not possible to make the deposit" });
+    const dateFormat = new Date(date + " 00:00");
+    console.log(date + ":00");
+
+    const statement = await Transaction.findAll({
+      where: { user_id: 1 },
+    });
+
+    const transactionDate = statement.filter(
+      (transData) =>
+        transData.createdAt.toDateString() === dateFormat.toDateString()
+    );
+
+    console.log(dateFormat);
+
+    return res.json(transactionDate);
   }
 }
 

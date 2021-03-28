@@ -3,13 +3,20 @@ const route = new Router();
 
 // =>Controllers
 const accountController = require("./app/controllers/accountController");
+const transactionController = require("./app/controllers/transactionController");
 
 // => middlewares
 const verifyIfExistsAccountCPF = require("./app/middlewares/verifyIfExistsAccount");
 const verifydata = require("./app/middlewares/verifydata");
 
 route.post("/account", verifydata, accountController.store);
-route.get("/statement", verifyIfExistsAccountCPF, accountController.index);
-route.post("/deposit", verifyIfExistsAccountCPF, accountController.deposit);
+route.get("/statement", verifyIfExistsAccountCPF, accountController.show);
+route.post(
+  "/deposit",
+  verifyIfExistsAccountCPF,
+  transactionController.deposito
+);
+route.post("/saque", verifyIfExistsAccountCPF, transactionController.saque);
 
+route.get("/statement/date", verifyIfExistsAccountCPF, accountController.index);
 module.exports = route;
