@@ -18,5 +18,15 @@ route.post(
 );
 route.post("/saque", verifyIfExistsAccountCPF, transactionController.saque);
 
-route.get("/statement/date", verifyIfExistsAccountCPF, accountController.index);
+route.get(
+  "/statement/date",
+  verifyIfExistsAccountCPF,
+  transactionController.TransactionDate
+);
+
+route.put(
+  "/account/update",
+  verifyIfExistsAccountCPF,
+  accountController.update
+);
 module.exports = route;

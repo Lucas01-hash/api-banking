@@ -28,26 +28,22 @@ class AccountController {
     return res.json(user);
   }
 
-  async index(req, res) {
-    const { accountUser } = req;
-
-    const { date } = req.query;
-
-    const dateFormat = new Date(date + " 00:00");
-    console.log(date + ":00");
-
-    const statement = await Transaction.findAll({
-      where: { user_id: 1 },
+  async update(req, res) {
+    const { user_id } = req.headers;
+    const conta = await Account.findOne({
+      attributes: ["id"],
+      where: { cpf: user_id },
     });
 
-    const transactionDate = statement.filter(
-      (transData) =>
-        transData.createdAt.toDateString() === dateFormat.toDateString()
-    );
+    const { name } = req.body;
 
-    console.log(dateFormat);
+    if (conta) {
+      await conta.update({ name });
 
-    return res.json(transactionDate);
+      return res.json({ message: "atualizado com sucesso", conta });
+    }
+
+    return res.json({ error: "error ao atualizar" });
   }
 }
 

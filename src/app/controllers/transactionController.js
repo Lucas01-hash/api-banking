@@ -35,5 +35,27 @@ class transactionController {
 
     return res.status(400).json({ error: "Error ao concluir o saque" });
   }
+
+  async TransactionDate(req, res) {
+    const { accountUser } = req;
+
+    const { date } = req.query;
+
+    const dateFormat = new Date(date + " 00:00");
+    console.log(date + ":00");
+
+    const statement = await Transaction.findAll({
+      where: { user_id: 1 },
+    });
+
+    const transactionDate = statement.filter(
+      (transData) =>
+        transData.createdAt.toDateString() === dateFormat.toDateString()
+    );
+
+    console.log(dateFormat);
+
+    return res.json(transactionDate);
+  }
 }
 module.exports = new transactionController();
