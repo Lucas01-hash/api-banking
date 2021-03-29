@@ -45,6 +45,21 @@ class AccountController {
 
     return res.json({ error: "error ao atualizar" });
   }
+
+  async delete(req, res) {
+    const { user_id } = req.headers;
+    const conta = await Account.findOne({
+      attributes: ["id"],
+      where: { cpf: user_id },
+    });
+    if (conta) {
+      await conta.destroy(user_id);
+
+      return res.json({ message: "success delete account" });
+    }
+
+    return res.status(400).json({ error: "Delete account failed" });
+  }
 }
 
 module.exports = new AccountController();

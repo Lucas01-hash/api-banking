@@ -29,4 +29,6 @@ route.put(
   verifyIfExistsAccountCPF,
   accountController.update
 );
+
+route.delete("/account/delete", accountController.delete);
 module.exports = route;
